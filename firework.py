@@ -1,15 +1,19 @@
 import math
 import time
+import random
+
+
+BIAS = 2
 
 
 class Firework:
     def __init__(self, canvas):
         self.canvas = canvas
-        self.x = 300
+        self.x = random.randrange(start=0, stop=self.canvas.winfo_width())
         self.y = 400
+        self.speedY = random.random() + BIAS
         self.color = "red"
         self.radius = 5
-        self.direction = 0
         self.exploded = False
         self.particles = []
 
@@ -21,10 +25,10 @@ class Firework:
 
     def update(self):
         self.x += 0
-        self.y -= 0.1
-
+        self.y -= self.speedY
+        self.speedY -= 0.01
         self.draw()
-        if self.y < 0 and not self.is_exploded():
+        if self.speedY < 0 and not self.is_exploded():
             self.explode()
 
     def explode(self):
